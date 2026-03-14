@@ -42,6 +42,7 @@
             <div class="space-y-4">
                 <template x-for="(task, index) in assignments" :key="index">
                     <div x-show="task.title" class="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow">
+                        
                         <div class="flex items-center space-x-4">
                             <div class="bg-gray-100 p-3 rounded-xl text-gray-400">
                                 <i class="fa-regular fa-file-lines text-xl"></i>
@@ -51,16 +52,18 @@
                                 <p class="text-sm text-gray-400">Documento disponible</p>
                             </div>
                         </div>
+
                         <div class="flex space-x-2">
-                            <a :href="task.dropboxLink" target="_blank" 
+                            <a :href="task.dropboxLink.replace('dl=0', 'dl=1')" target="_blank" 
                                class="flex items-center px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold hover:bg-gray-50 transition-colors">
-                                <i class="fa-solid fa-download mr-2 opacity-50"></i> Descargar
+                                <i class="fa-solid fa-download mr-2 text-gray-500"></i> Descargar
                             </a>
                             <a :href="task.dropboxLink" target="_blank"
                                class="px-5 py-2 bg-black text-white rounded-xl text-sm font-semibold hover:bg-gray-800 transition-colors">
                                 Abrir <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px]"></i>
                             </a>
                         </div>
+
                     </div>
                 </template>
             </div>
@@ -75,11 +78,26 @@
         function courseApp() {
             return {
                 assignments: [
-                    { title: 'Practica #1: Medición de resistencia en serie con diodo y fuente variable', dropboxLink: 'https://www.dropbox.com/scl/fi/jg5uh42964ptga07p1mvf/Practica-1.pdf?rlkey=ttqxrze9gvhv04vbxrt8k0m46&st=lywnqqom&dl=0' },
-                    { title: 'Practica #2: Rectificador de media onda y de onda completa', dropboxLink: 'https://www.dropbox.com/scl/fi/va0w2whvnuot485xa36me/Practica-2.pdf?rlkey=mcg5nrdjse0iwslpjfuq177c7&st=49c9wm6h&dl=0' },
-                    { title: 'Investigación transistores BJT: Zonas de operación y curvas características', dropboxLink: 'https://www.dropbox.com/scl/fi/grvlaicirg23nuhttvset/Investigacion-Transistores.pdf?rlkey=sebue8tgawrmu7uomrkckwbmt&st=rfs9mr3b&dl=0' },
-                    { title: 'Reporte de examen: Fuente de voltaje', dropboxLink: 'https://www.dropbox.com/scl/fi/3lphcu6of66m7ebp4k5f5/Reporte-examen-Unidad-1.pdf?rlkey=cxwd7tacxyoclksntwwukcs80&st=m0gvxzyw&dl=0' },
-                    { title: 'Practica #3: Amplificador como interruptor', dropboxLink: 'https://www.dropbox.com/scl/fi/4txdxygk8uf923ynnc1px/Practica-3.pdf?rlkey=od6a1r709r9iucswab97akmte&st=jc8s4530&dl=0' }
+                    { 
+                        title: 'Practica #1: Medicion de resistencia en serie con diodo y fuente variable', 
+                        dropboxLink: 'https://www.dropbox.com/scl/fi/jg5uh42964ptga07p1mvf/Practica-1.pdf?rlkey=ttqxrze9gvhv04vbxrt8k0m46&st=izotaitv&dl=0' 
+                    },
+                    { 
+                        title: 'Practica #2: Rectificador de media onda y de onda completa', 
+                        dropboxLink: 'https://www.dropbox.com/scl/fi/va0w2whvnuot485xa36me/Practica-2.pdf?rlkey=mcg5nrdjse0iwslpjfuq177c7&st=ul3y6b2z&dl=0' 
+                    },
+                    { 
+                        title: 'Investigacion transistores BJT: Zonas de operacion y curvas caracteristicas', 
+                        dropboxLink: 'https://www.dropbox.com/scl/fi/grvlaicirg23nuhttvset/Investigacion-Transistores.pdf?rlkey=sebue8tgawrmu7uomrkckwbmt&st=5slha8p6&dl=0' 
+                    },
+                    { 
+                        title: 'Reporte de examen: Fuente de voltaje', 
+                        dropboxLink: 'https://www.dropbox.com/scl/fi/3lphcu6of66m7ebp4k5f5/Reporte-examen-Unidad-1.pdf?rlkey=cxwd7tacxyoclksntwwukcs80&st=5xn8tnng&dl=0' 
+                    },
+                    { 
+                        title: 'Practica #3: Amplificador como interruptor', 
+                        dropboxLink: 'https://www.dropbox.com/scl/fi/4txdxygk8uf923ynnc1px/Practica-3.pdf?rlkey=od6a1r709r9iucswab97akmte&st=ei0w1v8b&dl=0' 
+                    }
                 ]
             }
         }

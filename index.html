@@ -3,97 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electrónica Analógica - Organizador</title>
+    <title>Electrónica Analógica - Portafolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
-        .fade-in { animation: fadeIn 0.8s ease-out; }
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Oculta la barra de desplazamiento en los botones de unidad en móvil */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-900" x-data="courseApp()">
+<body class="bg-slate-50 font-sans text-slate-800" x-data="courseApp()">
 
-    <header class="p-4 sm:p-6 flex justify-center">
-        <div class="bg-black text-white p-2 rounded-lg">
-            <i class="fa-solid fa-microchip text-xl"></i>
+    <section class="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-12 sm:py-20 shadow-inner">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="inline-block bg-blue-500/20 text-blue-300 p-3 rounded-2xl mb-4 backdrop-blur-sm">
+                <i class="fa-solid fa-microchip text-2xl sm:text-3xl"></i>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3">
+                Electrónica Analógica
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+                Portafolio de evidencias: Prácticas, investigaciones y reportes.
+            </p>
         </div>
-    </header>
+    </section>
 
-    <main>
-        <section class="bg-white border-b border-gray-200 py-12 sm:py-20">
-            <div class="max-w-4xl mx-auto px-4 text-center fade-in">
-                <h1 class="text-3xl sm:text-5xl font-bold tracking-tight mb-3 sm:mb-4 leading-tight">Electrónica Analógica</h1>
-                <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto px-2">Alumno: Gonzalez Quezada Brismar Alexander</p>
-                <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto px-2">Listado general de tareas y proyectos del curso</p>
-            </div>
-        </section>
+    <main class="max-w-4xl mx-auto px-4 -mt-6 sm:-mt-8 relative z-10 pb-20">
+        
+        <div class="bg-white p-2 rounded-2xl shadow-lg border border-slate-100 mb-6 flex overflow-x-auto no-scrollbar gap-2 sm:justify-center">
+            <template x-for="unit in units" :key="unit.id">
+                <button 
+                    @click="activeUnit = unit.id"
+                    :class="activeUnit === unit.id ? 'bg-blue-600 text-white shadow-md' : 'bg-transparent text-slate-500 hover:bg-slate-100 hover:text-slate-800'"
+                    class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base whitespace-nowrap transition-all duration-200">
+                    <span x-text="unit.title"></span>
+                </button>
+            </template>
+        </div>
 
-        <section class="py-10 sm:py-12 max-w-4xl mx-auto px-4 fade-in" style="animation-delay: 0.2s;">
+        <div class="bg-white rounded-3xl shadow-xl p-5 sm:p-8 border border-slate-100 min-h-[400px]">
             
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 sm:mb-8">
-                <h2 class="text-xl sm:text-2xl font-semibold tracking-tight">Todas las Asignaciones</h2>
-                <span class="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs font-bold self-start sm:self-auto" 
-                      x-text="assignments.filter(a => a.title).length + ' tareas'"></span>
-            </div>
-
-            <div class="space-y-4">
-                <template x-for="(task, index) in assignments" :key="index">
-                    <div x-show="task.title" class="bg-white border border-gray-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between shadow-sm hover:shadow-md transition-shadow gap-4 sm:gap-6">
-                        
-                        <div class="flex items-start space-x-3 sm:space-x-4">
-                            <div class="bg-gray-100 p-3 rounded-xl text-gray-400 shrink-0 mt-1 sm:mt-0">
-                                <i class="fa-regular fa-file-lines text-lg sm:text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-gray-800 text-sm sm:text-base leading-snug" x-text="task.title"></h3>
-                                <p class="text-xs sm:text-sm text-gray-400 mt-1">Documento disponible</p>
-                            </div>
+            <template x-for="unit in units" :key="unit.id">
+                <div x-show="activeUnit === unit.id" x-cloak class="fade-in">
+                    
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-800" x-text="unit.title"></h2>
+                            <p class="text-sm text-slate-500 mt-1" x-text="unit.description"></p>
                         </div>
-
-                        <div class="flex w-full sm:w-auto space-x-2 shrink-0">
-                            <a :href="task.dropboxLink.replace('dl=0', 'dl=1')" target="_blank" 
-                               class="flex-1 sm:flex-none flex justify-center items-center px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold hover:bg-gray-50 transition-colors">
-                                <i class="fa-solid fa-download mr-2 text-gray-500"></i> Descargar
-                            </a>
-                            <a :href="task.dropboxLink" target="_blank"
-                               class="flex-1 sm:flex-none flex justify-center items-center px-5 py-2 bg-black text-white rounded-xl text-sm font-semibold hover:bg-gray-800 transition-colors">
-                                Abrir <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-[10px]"></i>
-                            </a>
-                        </div>
-
+                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold border border-blue-100">
+                            <span x-text="unit.assignments.filter(a => a.link).length"></span> entregas
+                        </span>
                     </div>
-                </template>
-            </div>
-        </section>
+
+                    <div class="space-y-4">
+                        <template x-for="(task, index) in unit.assignments" :key="index">
+                            
+                            <div class="group relative bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between hover:border-blue-300 transition-colors gap-4"
+                                 :class="task.link ? 'border-l-4 border-l-blue-500' : 'border-l-4 border-l-slate-300 opacity-70'">
+                                
+                                <div class="flex items-start space-x-4">
+                                    <div class="p-3 rounded-lg shrink-0 mt-1 sm:mt-0 transition-transform"
+                                         :class="task.link ? 'bg-white text-blue-500 shadow-sm group-hover:scale-110' : 'bg-slate-200 text-slate-400'">
+                                        <i class="fa-solid fa-file-pdf text-xl" x-show="task.link"></i>
+                                        <i class="fa-solid fa-file-circle-xmark text-xl" x-show="!task.link"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-800 text-sm sm:text-base leading-snug" x-text="task.title"></h3>
+                                        
+                                        <p x-show="task.link" class="text-xs sm:text-sm text-slate-500 mt-1.5 font-medium">
+                                            <i class="fa-solid fa-circle-check text-green-500 mr-1"></i> Disponible
+                                        </p>
+                                        <p x-show="!task.link" class="text-xs sm:text-sm text-slate-400 mt-1.5 font-medium">
+                                            <i class="fa-solid fa-clock mr-1"></i> Pendiente de subir
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div x-show="task.link" class="flex w-full sm:w-auto space-x-2 shrink-0">
+                                    <a :href="task.link ? task.link.replace('dl=0', 'dl=1') : '#'" target="_blank" 
+                                       class="flex-1 sm:flex-none flex justify-center items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm font-bold hover:bg-blue-100 transition-colors">
+                                        <i class="fa-solid fa-download sm:mr-2"></i> <span class="hidden sm:inline">Descargar</span>
+                                    </a>
+                                    <a :href="task.link || '#'" target="_blank"
+                                       class="flex-1 sm:flex-none flex justify-center items-center px-5 py-2 bg-slate-800 text-white rounded-lg text-sm font-bold hover:bg-slate-900 transition-colors">
+                                        Abrir <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                                    </a>
+                                </div>
+
+                                <div x-show="!task.link" class="hidden sm:flex w-full sm:w-auto shrink-0 px-4 py-2 bg-slate-100 text-slate-400 rounded-lg text-sm font-bold cursor-not-allowed">
+                                    Próximamente
+                                </div>
+
+                            </div>
+                        </template>
+                    </div>
+
+                </div>
+            </template>
+            
+        </div>
     </main>
+
     <script>
         function courseApp() {
             return {
-                assignments: [
-                    { 
-                        title: 'Practica #1: Medicion de resistencia en serie con diodo y fuente variable', 
-                        dropboxLink: 'https://www.dropbox.com/scl/fi/jg5uh42964ptga07p1mvf/Practica-1.pdf?rlkey=ttqxrze9gvhv04vbxrt8k0m46&st=izotaitv&dl=0' 
+                // Inicia mostrando la Unidad 1 por defecto
+                activeUnit: 1, 
+                
+                // Estructura de todas las unidades
+                units: [
+                    {
+                        id: 1,
+                        title: 'Unidad 1',
+                        description: 'Fundamentos teóricos y mediciones iniciales',
+                        assignments: [
+                            { 
+                                title: 'Práctica #1: Medición de resistencia en serie con diodo y fuente variable', 
+                                link: 'https://www.dropbox.com/scl/fi/jg5uh42964ptga07p1mvf/Practica-1.pdf?rlkey=ttqxrze9gvhv04vbxrt8k0m46&st=izotaitv&dl=0' 
+                            },
+                            { 
+                                title: 'Práctica #2: Rectificador de media onda y de onda completa', 
+                                link: 'https://www.dropbox.com/scl/fi/va0w2whvnuot485xa36me/Practica-2.pdf?rlkey=mcg5nrdjse0iwslpjfuq177c7&st=ul3y6b2z&dl=0' 
+                            },
+                            { 
+                                title: 'Reporte de examen: Fuente de voltaje', 
+                                link: 'https://www.dropbox.com/scl/fi/3lphcu6of66m7ebp4k5f5/Reporte-examen-Unidad-1.pdf?rlkey=cxwd7tacxyoclksntwwukcs80&st=5xn8tnng&dl=0' 
+                            }
+                        ]
                     },
-                    { 
-                        title: 'Practica #2: Rectificador de media onda y de onda completa', 
-                        dropboxLink: 'https://www.dropbox.com/scl/fi/va0w2whvnuot485xa36me/Practica-2.pdf?rlkey=mcg5nrdjse0iwslpjfuq177c7&st=ul3y6b2z&dl=0' 
+                    {
+                        id: 2,
+                        title: 'Unidad 2',
+                        description: 'Transistores y sus aplicaciones',
+                        assignments: [
+                            { 
+                                title: 'Investigación transistores BJT: Zonas de operación y curvas características', 
+                                link: 'https://www.dropbox.com/scl/fi/grvlaicirg23nuhttvset/Investigacion-Transistores.pdf?rlkey=sebue8tgawrmu7uomrkckwbmt&st=5slha8p6&dl=0' 
+                            },
+                            { 
+                                title: 'Práctica #3: Amplificador como interruptor', 
+                                link: 'https://www.dropbox.com/scl/fi/4txdxygk8uf923ynnc1px/Practica-3.pdf?rlkey=od6a1r709r9iucswab97akmte&st=ei0w1v8b&dl=0' 
+                            }
+                        ]
                     },
-                    { 
-                        title: 'Investigacion transistores BJT: Zonas de operacion y curvas caracteristicas', 
-                        dropboxLink: 'https://www.dropbox.com/scl/fi/grvlaicirg23nuhttvset/Investigacion-Transistores.pdf?rlkey=sebue8tgawrmu7uomrkckwbmt&st=5slha8p6&dl=0' 
+                    {
+                        id: 3,
+                        title: 'Unidad 3',
+                        description: 'Sensores y circuitos avanzados',
+                        assignments: [
+                            { title: 'Práctica: Sensor crepuscular', link: '' },
+                            { title: 'Espacio para trabajo pendiente', link: '' },
+                            { title: 'Espacio para trabajo pendiente', link: '' },
+                            { title: 'Espacio para trabajo pendiente', link: '' }
+                        ]
                     },
-                    { 
-                        title: 'Reporte de examen: Fuente de voltaje', 
-                        dropboxLink: 'https://www.dropbox.com/scl/fi/3lphcu6of66m7ebp4k5f5/Reporte-examen-Unidad-1.pdf?rlkey=cxwd7tacxyoclksntwwukcs80&st=5xn8tnng&dl=0' 
+                    {
+                        id: 4,
+                        title: 'Unidad 4',
+                        description: 'Contenido próximo a desarrollar',
+                        assignments: [
+                            { title: 'Espacio para trabajo de Unidad 4', link: '' },
+                            { title: 'Espacio para trabajo de Unidad 4', link: '' },
+                            { title: 'Espacio para trabajo de Unidad 4', link: '' }
+                        ]
                     },
-                    { 
-                        title: 'Practica #3: Amplificador como interruptor', 
-                        dropboxLink: 'https://www.dropbox.com/scl/fi/4txdxygk8uf923ynnc1px/Practica-3.pdf?rlkey=od6a1r709r9iucswab97akmte&st=ei0w1v8b&dl=0' 
+                    {
+                        id: 5,
+                        title: 'Unidad 5',
+                        description: 'Proyecto final y evaluaciones',
+                        assignments: [
+                            { title: 'Espacio para trabajo de Unidad 5', link: '' },
+                            { title: 'Espacio para trabajo de Unidad 5', link: '' },
+                            { title: 'Espacio para trabajo de Unidad 5', link: '' }
+                        ]
                     }
                 ]
             }
